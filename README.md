@@ -1,5 +1,5 @@
 # Ice_Tracing
-In the part2 of the project I have implemented the AirIce boundary using the Simple Bayes net and Viterbi. 
+I have implemented the AirIce boundary using the Simple Bayes net and Viterbi. 
 
 ### Simple Approach:
 In the simple I have implemented taking the Firstmax and Secondmax values and then taking the absolute of the difference between to be greater than 10 pixels. Then taking the minimum pixel as the first boundary i.e the Airice boundary and the maximum pixels the Icerock boundary.
