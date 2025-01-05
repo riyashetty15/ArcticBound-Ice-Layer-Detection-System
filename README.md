@@ -1,4 +1,4 @@
-# Ice_Tracing
+# ArcticBound: Ice Layer Detection System
 I have implemented the AirIce boundary using the Simple Bayes net and Viterbi. 
 
 ### Simple Approach:
