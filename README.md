@@ -1,27 +1,49 @@
 # ArcticBound: Ice Layer Detection System
-I have implemented the AirIce boundary using the Simple Bayes net and Viterbi. 
+### Overview
+The program processes a given grayscale image and computes:
 
-### Simple Approach:
-In the simple I have implemented taking the Firstmax and Secondmax values and then taking the absolute of the difference between to be greater than 10 pixels. Then taking the minimum pixel as the first boundary i.e the Airice boundary and the maximum pixels the Icerock boundary.
+- Simple Bayesian Method: Identifies layer boundaries using local maxima in edge strength.
+- Viterbi Algorithm (HMM): Employs probabilistic modeling to find the most likely sequence of boundary positions.
+- Human-Traced Viterbi Algorithm: Improves Viterbi results by incorporating user-provided feedback points.
 
-### Viterbi Approach:
-1. The transisition probablities which I have taken as a predefined list. The greater the difference in the number of rows from the current row the smaller the probabilities.
-2. The Emission probablities I have made use of the formula which I have defined as a utility function, which provides us the with emission probabilities for the edge strengths.
-3. The states are nothing but the values from the emission probablities in this case.
-Then coming to the actual calculation of the Viterbi algorithm.
+**The results include:**
 
-Here, I have taken the absolute difference between the transition probabilities and the row values in the edge strengths and I have checked if the difference is within the range for the values mentioned in the transition probablities. 
-I have assumed 5 values in the list of transition probablities. These 5 values are the position of the rows i.e 5th value in the transition probablities indicates that the row value is 5 rows apart.
+Layer boundaries visualized with different colors:
+- Yellow: Simple Bayesian
+- Blue: Viterbi (HMM)
+- Red: Human-Traced Viterbi
 
-I have compared this value with the maximum which initially I have assumed to be zero which I are then assigning with the values calculated for the val. 
-Once I have the maximum I are pushing it into the states by multiplying it with the emission values and then  taking the final maximum of the final value. 
-I have used backtracking by starting from the last column value for each columnand then decrementing the value at each column.
+### Files Generated
+- `air_ice_output.png`: Visualization of air-ice boundary predictions.
+- `ice_rock_output.png`: Visualization of ice-rock boundary predictions.
+- `layers_output.txt`: Contains numerical values for boundaries computed using the three methods.
+### How It Works
+* Edge Strength Map:
+  - An edge detection algorithm computes the edge strength for each pixel in the input image.
 
-Similarly, I have used the same approach for the IceRock boundary in which I have just added 10 pixels across the rows indexes from the Airice boundaries and have started checking or the state values from the +10 pixels till the end of the column. 
-I have added this value to the final maximum value of the Viterbi through which I get the Icerock boundary.
+* Simple Bayesian Method:
+  - For each column, find the two highest edge strength values separated by a threshold distance.
+  - Assign the upper boundary to air-ice and the lower to ice-rock.
+* Viterbi Algorithm:
+  - Uses emission probabilities derived from the edge strength map.
+  - Models state transitions with decreasing probabilities for larger positional changes.
+* Human-Traced Viterbi Algorithm:
+  - Incorporates user-provided points for the air-ice or ice-rock boundaries.
+  - Adjusts transition probabilities and state initialization accordingly.
+### Usage
 
-For the human input values the similar approach is used but with a twist. For the given coordinates I make the whole row and column of the given coordinates as zero but just keeping the provided coordinates as 1. 
-Except this the whole implementation is same as that of the above Viterbi functions which I implemented.
+- Required libraries: Pillow, numpy, scipy, imageio
 
-To support the code I have added the images of the output for each test file provided:
-I have added the supporting output images inside the images in the part2 folder of the code.
+### Code Structure
+- `edge_strength()`: Computes the edge strength map of the image.
+- `draw_boundary()`: Plots a boundary line on the image.
+- `viterbi()`: Implements the Viterbi algorithm to compute boundaries.
+- `air_human_viterbi()`: Human-traced version of the Viterbi algorithm for air-ice boundary.
+- `icerock_viterbi()`: Computes ice-rock boundary using Viterbi.
+- `icerock_human_viterbi()`: Human-traced version of the Viterbi algorithm for ice-rock boundary.
+### Example
+Given an input image (input_image.png), the program identifies and visualizes the air-ice and ice-rock layers, saving the results as:
+<br>
+`air_ice_output.png` <br>
+`ice_rock_output.png`<br>
+Additionally, the coordinates for the boundaries are stored in layers_output.txt.
