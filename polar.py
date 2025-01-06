@@ -1,6 +1,6 @@
 #!/usr/local/bin/python3
 #
-# Authors: Riya Shetty (rishett), Vanita Lalwani (vlalwan), Rohith Reddy (rohi)
+# Authors: Riya Shetty (rishett)
 #
 # Ice layer finder
 # Based on skeleton code by D. Crandall, November 2021
